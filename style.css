@@ -1,0 +1,775 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  overflow: hidden;
+
+  font-family: Georgia, serif;
+  color: white;
+
+  /* ORIGINAL STATIC BACKGROUND */
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      #ffe5f1 0%,
+      transparent 35%
+    ),
+    linear-gradient(
+      180deg,
+      #24142f 0%,
+      #54294f 55%,
+      #192c28 100%
+    );
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+
+  transform: none !important;
+  zoom: 1 !important;
+}
+
+.garden {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+
+  transform: none !important;
+}
+
+.garden::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 28%;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      rgba(16, 55, 39, 0.8)
+    );
+
+  pointer-events: none;
+}
+
+/* ==========================================
+   TITLE
+========================================== */
+
+.title {
+  position: relative;
+  z-index: 10;
+
+  text-align: center;
+  padding-top: 8vh;
+
+  text-shadow:
+    0 3px 15px rgba(255, 120, 190, 0.6);
+}
+
+.title h1 {
+  font-size: clamp(1.7rem, 5vw, 3.5rem);
+  color: #fff0f8;
+}
+
+.title p {
+  margin-top: 12px;
+
+  font-size: 1.1rem;
+  opacity: 0.8;
+
+  animation:
+    breathe
+    2s
+    ease-in-out
+    infinite;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ==========================================
+   TULIP FIELD
+========================================== */
+
+.tulip-field {
+  position: absolute;
+  inset: 0;
+
+  transform: none !important;
+}
+
+/* ==========================================
+   TULIPS
+========================================== */
+
+.tulip {
+  position: absolute;
+
+  width: 100px;
+  height: 230px;
+
+  border: 0;
+  outline: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  transform-origin: bottom center;
+
+  -webkit-tap-highlight-color: transparent;
+
+  /*
+    IMPORTANT:
+    No transform animation here.
+    This prevents the background/scene
+    from appearing to zoom.
+  */
+
+  transition:
+    filter 0.25s ease;
+}
+
+.tulip:hover {
+  filter: brightness(1.08);
+}
+
+.tulip:active {
+  filter: brightness(1.15);
+}
+
+.tulip:focus-visible {
+  outline: 2px solid white;
+  border-radius: 50%;
+}
+
+/* ==========================================
+   ORIGINAL POSITIONS
+========================================== */
+
+.tulip-1 {
+  left: 12%;
+  bottom: 10%;
+
+  transform:
+    rotate(-7deg);
+}
+
+.tulip-2 {
+  left: 34%;
+  bottom: 7%;
+
+  transform:
+    rotate(4deg)
+    scale(1.1);
+}
+
+.tulip-3 {
+  right: 33%;
+  bottom: 9%;
+
+  transform:
+    rotate(-3deg)
+    scale(0.95);
+}
+
+.tulip-4 {
+  right: 11%;
+  bottom: 11%;
+
+  transform:
+    rotate(7deg)
+    scale(1.05);
+}
+
+/* ==========================================
+   TULIP FLOWER
+========================================== */
+
+.flower {
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+
+  width: 68px;
+  height: 72px;
+
+  transform: translateX(-50%);
+
+  filter:
+    drop-shadow(
+      0 8px 12px
+      rgba(255, 40, 130, 0.3)
+    );
+}
+
+.petal {
+  position: absolute;
+
+  bottom: 0;
+
+  width: 42px;
+  height: 67px;
+
+  border-radius:
+    50%
+    50%
+    35%
+    35%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff9cc7,
+      #f23d83 60%,
+      #b71963
+    );
+}
+
+.p1 {
+  left: 13px;
+  z-index: 3;
+}
+
+.p2 {
+  left: 0;
+  bottom: -2px;
+
+  transform: rotate(-27deg);
+
+  z-index: 2;
+}
+
+.p3 {
+  right: 0;
+  bottom: -2px;
+
+  transform: rotate(27deg);
+
+  z-index: 2;
+}
+
+.p4 {
+  left: 8px;
+
+  height: 60px;
+
+  transform: rotate(-10deg);
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffb2d3,
+      #ee397d
+    );
+
+  z-index: 4;
+}
+
+.p5 {
+  right: 8px;
+
+  height: 60px;
+
+  transform: rotate(10deg);
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffb2d3,
+      #ee397d
+    );
+
+  z-index: 4;
+}
+
+/* ==========================================
+   STEM
+========================================== */
+
+.stem {
+  position: absolute;
+
+  left: 47px;
+  top: 65px;
+
+  width: 7px;
+  height: 160px;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #24633f,
+      #56a963,
+      #1e5538
+    );
+}
+
+/* ==========================================
+   LEAVES
+========================================== */
+
+.leaf {
+  position: absolute;
+
+  top: 125px;
+
+  width: 55px;
+  height: 25px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #69b76a,
+      #205c3d
+    );
+
+  border-radius:
+    100%
+    0
+    100%
+    0;
+}
+
+.leaf-left {
+  left: 5px;
+
+  transform:
+    rotate(25deg);
+}
+
+.leaf-right {
+  right: 2px;
+
+  transform:
+    scaleX(-1)
+    rotate(20deg);
+}
+
+/* ==========================================
+   TULIP RESPawn
+   NO TRANSFORM = NO ZOOM
+========================================== */
+
+.tulip.respawning {
+  animation:
+    tulipRespawn
+    1.15s
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    )
+    forwards;
+}
+
+@keyframes tulipRespawn {
+
+  0% {
+    opacity: 0;
+
+    filter:
+      blur(8px)
+      brightness(1.8);
+  }
+
+  25% {
+    opacity: 0.25;
+
+    filter:
+      blur(5px)
+      brightness(1.6);
+  }
+
+  50% {
+    opacity: 0.65;
+
+    filter:
+      blur(2px)
+      brightness(1.3);
+  }
+
+  72% {
+    opacity: 1;
+
+    filter:
+      blur(0)
+      brightness(1.15);
+  }
+
+  85% {
+    opacity: 0.9;
+
+    filter:
+      blur(0)
+      brightness(1.05);
+  }
+
+  100% {
+    opacity: 1;
+
+    filter:
+      blur(0)
+      brightness(1);
+  }
+}
+
+/* ==========================================
+   EXPLODING PETALS
+========================================== */
+
+.exploding-petal {
+  position: fixed;
+
+  z-index: 110;
+
+  pointer-events: none;
+
+  border-radius:
+    70%
+    30%
+    70%
+    30%;
+
+  box-shadow:
+    0 0 8px
+    rgba(255, 100, 170, 0.7);
+
+  transform:
+    translate(-50%, -50%)
+    scale(0.2);
+
+  animation:
+    petalExplosion
+    0.95s
+    cubic-bezier(
+      0.15,
+      0.8,
+      0.25,
+      1
+    )
+    forwards;
+}
+
+@keyframes petalExplosion {
+
+  0% {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      rotate(0deg)
+      scale(0.2);
+  }
+
+  12% {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      rotate(40deg)
+      scale(1.2);
+  }
+
+  55% {
+    opacity: 1;
+
+    transform:
+      translate(
+        calc(-50% + var(--dx) * 0.65),
+        calc(-50% + var(--dy) * 0.65)
+      )
+      rotate(var(--rotation))
+      scale(1);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(
+        calc(-50% + var(--dx)),
+        calc(-50% + var(--dy))
+      )
+      rotate(var(--rotation))
+      scale(0.25);
+  }
+}
+
+/* ==========================================
+   HEART
+   ORIGINAL ANIMATION
+========================================== */
+
+.heart {
+  position: fixed;
+
+  width: 80px;
+  height: 80px;
+
+  z-index: 100;
+
+  pointer-events: none;
+
+  transform:
+    translate(-50%, -50%)
+    scale(0);
+
+  animation:
+    heartAppear
+    1.7s
+    cubic-bezier(
+      0.17,
+      0.89,
+      0.32,
+      1.3
+    )
+    forwards;
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+
+  position: absolute;
+
+  width: 48px;
+  height: 72px;
+
+  border-radius:
+    50px
+    50px
+    0
+    0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff,
+      #ff8ac4 25%,
+      #ff267c 65%,
+      #d90062
+    );
+
+  box-shadow:
+    0 0 20px #ff6eae,
+    0 0 50px
+    rgba(255, 40, 130, 0.8);
+}
+
+.heart::before {
+  left: 36px;
+
+  transform: rotate(45deg);
+
+  transform-origin:
+    0 100%;
+}
+
+.heart::after {
+  left: -4px;
+
+  transform: rotate(-45deg);
+
+  transform-origin:
+    100% 100%;
+}
+
+@keyframes heartAppear {
+
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(0)
+      rotate(-20deg);
+
+    opacity: 0;
+  }
+
+  20% {
+    transform:
+      translate(-50%, -50%)
+      scale(1.3)
+      rotate(8deg);
+
+    opacity: 1;
+  }
+
+  55% {
+    transform:
+      translate(-50%, -55%)
+      scale(1);
+  }
+
+  100% {
+    transform:
+      translate(-50%, -70%)
+      scale(0.8);
+
+    opacity: 0;
+  }
+}
+
+/* ==========================================
+   SPARKLES
+========================================== */
+
+.sparkle {
+  position: fixed;
+
+  z-index: 99;
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  pointer-events: none;
+
+  box-shadow:
+    0 0 8px white,
+    0 0 18px #ff6eb4;
+
+  animation:
+    sparkle
+    1s
+    ease-out
+    forwards;
+}
+
+@keyframes sparkle {
+
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(0);
+
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform:
+      translate(
+        calc(-50% + var(--x)),
+        calc(-50% + var(--y))
+      )
+      scale(0);
+
+    opacity: 0;
+  }
+}
+
+/* ==========================================
+   MINI HEARTS
+========================================== */
+
+.mini-heart {
+  position: fixed;
+
+  z-index: 98;
+
+  pointer-events: none;
+
+  color: #ff8fc5;
+
+  font-size: 18px;
+
+  text-shadow:
+    0 0 10px #ff4f9c;
+
+  animation:
+    miniHeart
+    1.4s
+    ease-out
+    forwards;
+}
+
+@keyframes miniHeart {
+
+  0% {
+    transform:
+      translate(-50%, -50%)
+      scale(0);
+
+    opacity: 1;
+  }
+
+  100% {
+    transform:
+      translate(
+        calc(-50% + var(--x)),
+        calc(-50% + var(--y))
+      )
+      rotate(20deg)
+      scale(1);
+
+    opacity: 0;
+  }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+
+  .tulip {
+    width: 80px;
+  }
+
+  .tulip-1 {
+    left: 2%;
+    bottom: 8%;
+  }
+
+  .tulip-2 {
+    left: 25%;
+    bottom: 5%;
+  }
+
+  .tulip-3 {
+    right: 25%;
+    bottom: 6%;
+  }
+
+  .tulip-4 {
+    right: 1%;
+    bottom: 9%;
+  }
+}
