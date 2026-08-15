@@ -12,7 +12,10 @@ body {
 
 body {
   min-height: 100vh;
+  min-height: 100dvh; /* real visible height on mobile browsers (accounts for address bar) */
   overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: manipulation; /* removes double-tap zoom delay on mobile */
 
   font-family: Georgia, serif;
   color: white;
@@ -44,7 +47,10 @@ body {
   position: relative;
   width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
+
+  padding-bottom: env(safe-area-inset-bottom);
 
   transform: none !important;
 }
@@ -121,6 +127,8 @@ body {
   position: absolute;
   inset: 0;
 
+  --field-scale: 1;
+
   transform: none !important;
 }
 
@@ -144,20 +152,29 @@ body {
   transform-origin: bottom center;
 
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 
-  /*
-    IMPORTANT:
-    No transform animation here.
-    This prevents the background/scene
-    from appearing to zoom.
-  */
+  /* Per-tulip rotation/scale + a shared responsive scale factor.
+     --field-scale is set by media queries below on .tulip-field
+     and inherits down, so every tulip shrinks as one unit instead
+     of individual parts (stem/leaves/flower) getting misaligned. */
+  --rot: 0deg;
+  --base-scale: 1;
+
+  transform:
+    rotate(var(--rot))
+    scale(calc(var(--base-scale) * var(--field-scale, 1)));
 
   transition:
     filter 0.25s ease;
 }
 
-.tulip:hover {
-  filter: brightness(1.08);
+/* Only apply hover styling on devices that actually support hover
+   (mouse/trackpad) so taps on mobile don't get "stuck" highlighted. */
+@media (hover: hover) and (pointer: fine) {
+  .tulip:hover {
+    filter: brightness(1.08);
+  }
 }
 
 .tulip:active {
@@ -177,35 +194,31 @@ body {
   left: 12%;
   bottom: 10%;
 
-  transform:
-    rotate(-7deg);
+  --rot: -7deg;
 }
 
 .tulip-2 {
   left: 34%;
   bottom: 7%;
 
-  transform:
-    rotate(4deg)
-    scale(1.1);
+  --rot: 4deg;
+  --base-scale: 1.1;
 }
 
 .tulip-3 {
   right: 33%;
   bottom: 9%;
 
-  transform:
-    rotate(-3deg)
-    scale(0.95);
+  --rot: -3deg;
+  --base-scale: 0.95;
 }
 
 .tulip-4 {
   right: 11%;
   bottom: 11%;
 
-  transform:
-    rotate(7deg)
-    scale(1.05);
+  --rot: 7deg;
+  --base-scale: 1.05;
 }
 
 /* ==========================================
@@ -744,32 +757,100 @@ body {
 }
 
 /* ==========================================
-   MOBILE
+   MOBILE / RESPONSIVE
 ========================================== */
 
-@media (max-width: 600px) {
+/* Tablets & large phones */
+@media (max-width: 700px) {
 
-  .tulip {
-    width: 80px;
+  .title {
+    padding-top: calc(6vh + env(safe-area-inset-top));
   }
 
-  .tulip-1 {
-    left: 2%;
-    bottom: 8%;
+  .tulip-field {
+    --field-scale: 0.85;
   }
 
-  .tulip-2 {
-    left: 25%;
-    bottom: 5%;
+  .tulip-1 { left: 6%; bottom: 9%; }
+  .tulip-2 { left: 28%; bottom: 6%; }
+  .tulip-3 { right: 27%; bottom: 8%; }
+  .tulip-4 { right: 5%; bottom: 10%; }
+}
+
+/* Standard phones */
+@media (max-width: 480px) {
+
+  .title {
+    padding-top: calc(5vh + env(safe-area-inset-top));
   }
 
-  .tulip-3 {
-    right: 25%;
-    bottom: 6%;
+  .title p {
+    font-size: 1rem;
   }
 
-  .tulip-4 {
-    right: 1%;
-    bottom: 9%;
+  .tulip-field {
+    --field-scale: 0.68;
   }
+
+  .tulip-1 { left: 2%; bottom: 7%; }
+  .tulip-2 { left: 26%; bottom: 4%; }
+  .tulip-3 { right: 26%; bottom: 5%; }
+  .tulip-4 { right: 1%; bottom: 8%; }
+
+  /* Scale down effects so explosions feel proportional on small screens */
+  .heart {
+    width: 56px;
+    height: 56px;
+  }
+
+  .heart::before,
+  .heart::after {
+    width: 34px;
+    height: 50px;
+  }
+
+  .heart::before {
+    left: 25px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+
+  .title h1 {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+  }
+
+  .tulip-field {
+    --field-scale: 0.58;
+  }
+
+  .tulip-2 { left: 24%; }
+  .tulip-3 { right: 24%; }
+}
+
+/* Short viewports / landscape phones — prioritize vertical fit */
+@media (max-height: 480px) and (orientation: landscape) {
+
+  .title {
+    padding-top: calc(3vh + env(safe-area-inset-top));
+  }
+
+  .title h1 {
+    font-size: clamp(1.3rem, 4vw, 2rem);
+  }
+
+  .title p {
+    margin-top: 6px;
+    font-size: 0.9rem;
+  }
+
+  .tulip-field {
+    --field-scale: 0.6;
+  }
+
+  .tulip-1 { bottom: 4%; }
+  .tulip-2 { bottom: 2%; }
+  .tulip-3 { bottom: 3%; }
+  .tulip-4 { bottom: 5%; }
 }
